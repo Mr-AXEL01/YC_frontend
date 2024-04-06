@@ -16,10 +16,10 @@ export default function OrganizerLogin() {
             username: "",
         },
     })
-    function onSubmit() {
+    function onSubmit(values) {
         // Do something with the form values.
         // ✅ This will be type-safe and validated.
-        console.log()
+        console.log(values)
     }
     return (
         <>
