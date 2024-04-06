@@ -17,11 +17,6 @@ export default function Layout() {
                     <div>
                         <ul className="flex text-white">
                             <li className="ml-5 px-3 py-1">
-                                <Link to={'/'}>
-                                    Home
-                                </Link>
-                            </li>
-                            <li className="ml-5 px-3 py-1">
                                 <Link to={'/login'}>
                                     Login
                                 </Link>
@@ -29,11 +24,6 @@ export default function Layout() {
                             <li className="ml-5 px-3 py-1">
                                 <Link to={'/register'}>
                                     Register
-                                </Link>
-                            </li>
-                            <li className="ml-5 px-3 py-1">
-                                <Link to={'/users'}>
-                                    Users
                                 </Link>
                             </li>
                             <li className="ml-5 px-3 py-1 rounded font-semibold bg-gray-100 text-gray-800">
@@ -46,11 +36,9 @@ export default function Layout() {
                 </div>
             </header>
 
-            <main>
+            <main className="container">
                 <Outlet/>
             </main>
-
-            <footer>Footer</footer>
         </>
     );
 }
