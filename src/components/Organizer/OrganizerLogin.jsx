@@ -26,7 +26,8 @@ export default function OrganizerLogin() {
     const form = useForm({
         resolver: zodResolver(formSchema),
         defaultValues:{
-            username:'',
+            email:'',
+            password:'',
         }
 
     })
@@ -44,13 +45,10 @@ export default function OrganizerLogin() {
                         name="email"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel>email</FormLabel>
+                                <FormLabel>Email</FormLabel>
                                 <FormControl>
-                                    <Input type={'email'} placeholder="example@example" {...field} />
+                                    <Input placeholder="example@example" {...field} />
                                 </FormControl>
-                                <FormDescription>
-                                    This is your public display name.
-                                </FormDescription>
                                 <FormMessage />
                             </FormItem>
                         )}
@@ -60,13 +58,10 @@ export default function OrganizerLogin() {
                         name="password"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel>password</FormLabel>
+                                <FormLabel>Password</FormLabel>
                                 <FormControl>
                                     <Input type={'password'} placeholder="Password" {...field} />
                                 </FormControl>
-                                <FormDescription>
-                                    This is your public display name.
-                                </FormDescription>
                                 <FormMessage />
                             </FormItem>
                         )}
