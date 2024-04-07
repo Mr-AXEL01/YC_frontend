@@ -1,10 +1,13 @@
+import OrganizerLogin from "@/components/Organizer/OrganizerLogin.jsx";
+
 export default function Users() {
 
     return (
       <div>
           <h1 className="text-3xl">
-              hello from login page
+              Organiser Login
           </h1>
+          <OrganizerLogin/>
       </div>
     )
   }

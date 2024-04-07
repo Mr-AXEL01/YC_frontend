@@ -1,20 +1,13 @@
 
 
 import { z } from "zod"
-import {useForm} from "react-hook-form";
+import {Form, useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
+import {FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage} from "@/components/ui/form.jsx";
+import {Input} from "postcss";
+import {Button} from "@/components/ui/button.jsx";
 
-import { Button } from "@/components/ui/button"
-import {
-    Form,
-    FormControl,
-    FormDescription,
-    FormField,
-    FormItem,
-    FormLabel,
-    FormMessage,
-} from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
+
 
 const formSchema = z.object({
     email: z.string().email().min(2).max(50),
