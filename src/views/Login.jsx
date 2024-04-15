@@ -1,21 +1,12 @@
 import {Link} from "react-router-dom";
 import {LockClosedIcon} from "@heroicons/react/16/solid/index.js";
 
-export default function Login()
-{
+export default function Login() {
     return (
-        <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
-            <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-                <img
-                    className="mx-auto w-16 h-16 "
-                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzgeVnTqHCBfIny-LQCUcnx9aOellsv6AxpSdht7X9mMIp0jRQIe_7uT7PbjKoAg-zdgk&usqp=CAU"
-                    alt="YouCare"
-                />
-                <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-                    Sign in to your account
-                </h2>
-            </div>
-
+        <>
+            <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+                Sign in to your account
+            </h2>
             <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
                 <form className="space-y-6" action="#" method="POST">
                     <div>
@@ -66,7 +57,7 @@ export default function Login()
                         >
                             <span className="absolute inset-y-0 left-0 flex items-center pl-3">
                                 <LockClosedIcon className="h-5 w-5  text-idigo-500 group-hover:text-indigo-400"
-                                aria-hidden="true"/>
+                                                aria-hidden="true"/>
                             </span>
                             Sign in
                         </button>
@@ -76,11 +67,10 @@ export default function Login()
                 <p className="mt-10 text-center text-sm text-gray-500">
                     Not a member?{' '}
                     <Link to="/register" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
-                       create new account
+                        create new account
                     </Link>
                 </p>
             </div>
-        </div>
+        </>
     )
-  }
-  
+}
