@@ -1,9 +1,9 @@
-export default function Users() {
+export default function Dashboard() {
 
   return (
     <div>
         <h1 className="text-3xl">
-            hello from users page
+            Dashboard
         </h1>
     </div>
   )
