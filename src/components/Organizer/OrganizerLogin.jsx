@@ -15,6 +15,7 @@ import {
     FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import {axiosClient} from "@/api/axios.js";
 
 
 const formSchema = z.object({
@@ -26,15 +27,14 @@ export default function OrganizerLogin() {
     const form = useForm({
         resolver: zodResolver(formSchema),
         defaultValues:{
-            email:'',
-            password:'',
+            email:'abdelhakazrour3@gmail.com',
+            password:'12345678',
         }
 
     })
-    function onSubmit(values) {
-        // Do something with the form values.
-        // ✅ This will be type-safe and validated.
-        console.log(values)
+    const onSubmit = async values => {
+        const data = await axiosClient.post('login', values)
+        console.log(data)
     }
     return (
         <>
