@@ -1,7 +1,45 @@
 import {Link} from "react-router-dom";
 import {UserCircleIcon} from "lucide-react";
+import {useState} from "react";
+import axiosClient from "@/axios.js";
+import {useStateContext} from "@/contexts/ContextProvider.jsx";
 
 export default function Register() {
+    const { setCurrentUser, setUserToken} = useStateContext();
+    const [role, setRole] = useState('');
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [passwordConfirmation, setPasswordConfirmation] = useState('');
+    const [error, setError] = useState({__html: ''});
+
+    const onSubmit = (ev) => {
+        ev.preventDefault();
+        setError({__html: ''});
+
+        axiosClient
+            .post('/register', {
+                role: role,
+                name: name,
+                email: email,
+                password: password,
+                password_confirmation: passwordConfirmation
+        })
+            .then(({data}) => {
+                setCurrentUser(data.user)
+                setUserToken(data.authorisation.token)
+            })
+            .catch((error) => {
+                if(error.response) {
+                    const finalErrors = Object.values(error.response.data.errors).reduce((accum,
+                    next) => [...accum, ...next], [])
+                    console.log(finalErrors)
+                    setError({__html: finalErrors.join('<br>')})
+                }
+                console.error(error)
+            })
+    }
+
 
     return (
         <>
@@ -9,45 +47,36 @@ export default function Register() {
                 Sign-up and get your account
             </h2>
             <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-                <form className="space-y-6" action="#" method="POST">
+                {
+                    error
+                        .__html &&
+                    (
+                        <div className="bg-red-500 rounded py-2 px-3 text-white"
+                             dangerouslySetInnerHTML={error}>
+                        </div>
+                    )
+                }
+                <form onSubmit={onSubmit} className="space-y-6" action="#" method="POST">
+
                     <div>
-                        <label htmlFor="role" className="block flex gap-1 text-sm font-medium leading-6 text-gray-900">
-                            <UserCircleIcon/>
+                        <label htmlFor="role" className="block text-sm font-medium leading-6 text-gray-900">
+                            <UserCircleIcon />
                             Role
                         </label>
-                        <div className="mt-2 px-4 flex justify-between">
-                            <div
-                                className="p-2 border rounded-lg w-fit bg-red-500 hover:bg-red-600 transition-all flex items-center justify-center">
-                                <input
-                                    id="organiser"
-                                    name="role"
-                                    type="radio"
-                                    value="organizer"
-                                    autoComplete="role"
-                                    required
-                                    className="opacity-0 absolute"
-                                />
-                                <label htmlFor="organiser" className="text-white cursor-pointer">
-                                    Organizer
-                                </label>
-                            </div>
-                            <div
-                                className="p-2 border rounded-lg w-fit bg-yellow-400 hover:bg-yellow-500 transition-all flex items-center justify-center">
-                                <input
-                                    id="volunteer"
-                                    name="role"
-                                    type="radio"
-                                    value="volunteer"
-                                    autoComplete="role"
-                                    required
-                                    className="opacity-0 absolute"
-                                />
-                                <label htmlFor="volunteer" className="text-gray-900 cursor-pointer">
-                                    Volunteer
-                                </label>
-                            </div>
+                        <div className="mt-2">
+                            <select
+                                id="role"
+                                name="role"
+                                value={role}
+                                onChange={ev => setRole(ev.target.value)}
+                                required
+                                className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                            >
+                                <option value="">Select Role</option>
+                                <option value="organizer">Organizer</option>
+                                <option value="volunteer">Volunteer</option>
+                            </select>
                         </div>
-
                     </div>
 
                     <div>
@@ -60,8 +89,11 @@ export default function Register() {
                                 name="name"
                                 type="text"
                                 autoComplete="name"
+                                value={name}
+                                onChange={ev => setName(ev.target.value)}
                                 required
                                 className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                placeholder="washinton Danzel"
                             />
                         </div>
                     </div>
@@ -75,8 +107,11 @@ export default function Register() {
                                 name="email"
                                 type="email"
                                 autoComplete="email"
+                                value={email}
+                                onChange={ev => setEmail(ev.target.value)}
                                 required
                                 className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                placeholder="example@example"
                             />
                         </div>
                     </div>
@@ -91,8 +126,11 @@ export default function Register() {
                                 name="password"
                                 type="password"
                                 autoComplete="current-password"
+                                value={password}
+                                onChange={ev => setPassword(ev.target.value)}
                                 required
                                 className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                placeholder="Password"
                             />
                         </div>
                     </div>
@@ -107,9 +145,11 @@ export default function Register() {
                                 id="password-confirmation"
                                 name="password-confirmation"
                                 type="password"
-                                autoComplete="password-confirmation"
+                                value={passwordConfirmation}
+                                onChange={ev => setPasswordConfirmation(ev.target.value)}
                                 required
                                 className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                placeholder="Password Confirmation"
                             />
                         </div>
                     </div>

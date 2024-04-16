@@ -2,16 +2,12 @@ import {Fragment} from 'react'
 import {Disclosure, Menu, Transition} from '@headlessui/react'
 import {Bars3Icon, XMarkIcon} from '@heroicons/react/24/outline'
 import {Navigate, NavLink, Outlet} from "react-router-dom";
-import {userStateContext} from "@/contexts/ContextProvider.jsx";
+import {useStateContext} from "@/contexts/ContextProvider.jsx";
+import axiosClient from "@/axios.js";
 
-// const user = {
-//     name: 'Tom Cook',
-//     email: 'tom@example.com',
-//     imageUrl:
-//         'https://img.freepik.com/photos-gratuite/rendu-3d-personnage-dessin-anime-lunettes-veste_1142-51310.jpg?t=st=1713194776~exp=1713198376~hmac=4b1168fd5fd62602cf584d818f12c2c715c307340f7574cf34fdc43a0bdd4be0&w=740',
-// }
+
 const navigation = [
-    {name: 'Dashboard', to: '/dashboard'},
+    {name: 'Dashboard', to: '/'},
 
 ]
 
@@ -21,7 +17,7 @@ function classNames(...classes) {
 
 export default function DefaultLayout() {
 
-    const {currentUser, userToken} = userStateContext();
+    const {currentUser, userToken} = useStateContext();
 
     if (!userToken) {
         return <Navigate to='login' />
@@ -29,7 +25,12 @@ export default function DefaultLayout() {
 
     const logout = (ev) => {
         ev.preventDefault();
-        console.log("logout");
+        axiosClient.post('/logout')
+            .then((res) => {
+                setCurrentUser({});
+                setUserToken(null);
+
+        });
     }
 
     return (
